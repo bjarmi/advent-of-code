@@ -1,6 +1,7 @@
 [package]
-name = "day-3"
+name = "day-2-2024"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+

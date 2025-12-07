@@ -79,7 +79,7 @@ fn brute_force_is_safe_report(report: &[i32]) -> bool {
 
 fn extract_reports() -> io::Result<Vec<Vec<i32>>> {
     // Open the file
-    let file = File::open("src/reports.txt")?;
+    let file = File::open("reports.txt")?;
     let reader = BufReader::new(file);
 
     let mut reports: Vec<Vec<i32>> = Vec::new();
@@ -109,3 +109,4 @@ fn extract_reports() -> io::Result<Vec<Vec<i32>>> {
     }
     Ok(reports)
 }
+

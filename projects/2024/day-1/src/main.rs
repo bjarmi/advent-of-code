@@ -51,7 +51,7 @@ fn get_similarity_score(left: &[u32], right: &[u32]) -> u32 {
 
 fn extract_lists() -> io::Result<(Vec<u32>, Vec<u32>)> {
     // Open the file
-    let file = File::open("src/lists.txt")?;
+    let file = File::open("projects/2024/day-1/lists.txt")?;
     let reader = BufReader::new(file);
 
     // Initialize the vectors to store numbers

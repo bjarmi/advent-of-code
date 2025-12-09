@@ -21,7 +21,7 @@ if [ -d "$PROJECT_PATH" ]; then
 fi
 
 # Create directory structure
-mkdir -p "$PROJECT_PATH/src"
+mkdir -p "$PROJECT_PATH/src/solutions"
 
 # Create Cargo.toml
 cat > "$PROJECT_PATH/Cargo.toml" << EOF
@@ -34,15 +34,19 @@ edition = "2021"
 EOF
 
 # Create main.rs with a template
-cat > "$PROJECT_PATH/src/main.rs" << 'EOF'
+cat > "$PROJECT_PATH/src/main.rs" << EOF
+mod solutions;
+
+use solutions::solution1;
+use solutions::solution2;
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 
 fn main() {
     match read_input() {
         Ok(input) => {
-            println!("Part 1: {}", solve_part1(&input));
-            // println!("Part 2: {}", solve_part2(&input));
+            println!("Part 1: {}", solution1::solve_part1(&input));
+            println!("Part 2: {}", solution2::solve_part2(&input));
         }
         Err(e) => {
             eprintln!("Error reading input: {}", e);
@@ -50,20 +54,32 @@ fn main() {
     }
 }
 
-fn solve_part1(input: &[String]) -> i32 {
+fn read_input() -> io::Result<Vec<String>> {
+    let file = File::open("$PROJECT_PATH/input.txt")?;
+    let reader = BufReader::new(file);
+    reader.lines().collect()
+}
+EOF
+
+# Create solutions/mod.rs
+cat > "$PROJECT_PATH/src/solutions/mod.rs" << 'EOF'
+pub mod solution1;
+pub mod solution2;
+EOF
+
+# Create solutions/solution1.rs
+cat > "$PROJECT_PATH/src/solutions/solution1.rs" << 'EOF'
+pub fn solve_part1(instructions: &[String]) -> i32 {
     // TODO: Implement part 1
     0
 }
+EOF
 
-fn solve_part2(input: &[String]) -> i32 {
+# Create solutions/solution2.rs
+cat > "$PROJECT_PATH/src/solutions/solution2.rs" << 'EOF'
+pub fn solve_part2(instructions: &[String]) -> i32 {
     // TODO: Implement part 2
     0
-}
-
-fn read_input() -> io::Result<Vec<String>> {
-    let file = File::open("input.txt")?;
-    let reader = BufReader::new(file);
-    reader.lines().collect()
 }
 EOF
 

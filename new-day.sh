@@ -31,33 +31,47 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+aoc-common = { path = "../../../common" }
 EOF
 
 # Create main.rs with a template
 cat > "$PROJECT_PATH/src/main.rs" << EOF
 mod solutions;
 
+use std::time::Instant;
+
+use aoc_common::read_input_lines;
 use solutions::solution1;
 use solutions::solution2;
-use std::fs::File;
-use std::io::{self, BufRead, BufReader};
 
 fn main() {
-    match read_input() {
+    match read_input_lines("$PROJECT_PATH/input.txt") {
         Ok(input) => {
-            println!("Part 1: {}", solution1::solve_part1(&input));
-            println!("Part 2: {}", solution2::solve_part2(&input));
+            // ---- Part 1 ----
+            println!("Part 1: ");
+
+            let start_time = Instant::now();
+            let answer = solution1::solve_part1(&input);
+            let end_time = Instant::now();
+
+            println!("\tTotal time: {:?}", end_time.duration_since(start_time));
+            println!("\tAnswer: {}", answer);
+
+            // ---- Part 2 ----
+
+            println!("Part 2: ");
+
+            let start_time = Instant::now();
+            let answer = solution2::solve_part2(&input);
+            let end_time = Instant::now();
+
+            println!("\tTotal time: {:?}", end_time.duration_since(start_time));
+            println!("\tAnswer: {}", answer);
         }
         Err(e) => {
             eprintln!("Error reading input: {}", e);
         }
     }
-}
-
-fn read_input() -> io::Result<Vec<String>> {
-    let file = File::open("$PROJECT_PATH/input.txt")?;
-    let reader = BufReader::new(file);
-    reader.lines().collect()
 }
 EOF
 
